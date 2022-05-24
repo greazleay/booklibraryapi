@@ -7,10 +7,12 @@ import org.springframework.stereotype.Repository
 @Repository
 class MockBookDataSource : BookDataSource {
 
-    val books = listOf(
-        Book(id = "1", "Alice in Wonderland", "J.T Tolkien", 500, false),
-        Book(id = "2", title = "A Song of Fire and Ice", author = "R.R Martin", numOfPages = 1000, isRead = true),
-        Book(id = "3", title = "Harry Porter", author = "J. Abrams", numOfPages = 700, isRead = true)
+    val books = mutableListOf<Book>(
+        Book("1", "Adventures of Huckleberry Finn", "Mark Twain", 500, 1984, true),
+        Book("2", "The Sun Also Rises", "Ernest Hemingway", 1000, 1928, true),
+        Book("3", "The Grapes of Wrath", "ohn Steinbeck", 700, 1939, false),
+        Book("4", "Mrs Dalloway", "Virginia Woolf", 800, 1925, true),
+        Book("5", "The Great Gatsby", "F. Scott Fitzgerald", 1300, 1925, false)
     )
 
     override fun getBooks(): Collection<Book> = books
@@ -18,5 +20,13 @@ class MockBookDataSource : BookDataSource {
     override fun getBook(bookId: String): Book =
         books.firstOrNull() { it.id == bookId }
             ?: throw NoSuchElementException("Could not find a book with id $bookId")
+
+    override fun addNewBook(book: Book): Book {
+        if (books.any { it.id == book.id }) {
+            throw IllegalArgumentException("Book with ID: ${book.id} already exists.")
+        }
+        books.add(book)
+        return book
+    }
 
 }

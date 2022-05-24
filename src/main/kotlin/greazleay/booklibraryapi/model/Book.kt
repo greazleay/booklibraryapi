@@ -5,5 +5,6 @@ data class Book(
     val title: String,
     val author: String,
     val numOfPages: Int,
+    val firstPublish: Int,
     val isRead: Boolean
 )

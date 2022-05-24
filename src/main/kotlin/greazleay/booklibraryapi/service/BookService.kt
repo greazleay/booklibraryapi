@@ -11,4 +11,5 @@ class BookService(private val dataSource: BookDataSource) {
     fun getBooks(): Collection<Book> = dataSource.getBooks()
 
     fun getBook(bookId: String): Book = dataSource.getBook(bookId)
+    fun addNewBook(book: Book): Book = dataSource.addNewBook(book)
 }
