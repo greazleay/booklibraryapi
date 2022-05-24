@@ -1,5 +1,5 @@
 # booklibraryapi
-A CRUD REST API for managing book inventory built
+A CRUD REST API for managing book inventory
 
 ## Tech Stack
 * [Spring Boot](https://spring.io)
