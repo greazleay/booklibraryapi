@@ -14,4 +14,9 @@ class MockBookDataSource : BookDataSource {
     )
 
     override fun getBooks(): Collection<Book> = books
+
+    override fun getBook(bookId: String): Book =
+        books.firstOrNull() { it.id == bookId }
+            ?: throw NoSuchElementException("Could not find a book with id $bookId")
+
 }
