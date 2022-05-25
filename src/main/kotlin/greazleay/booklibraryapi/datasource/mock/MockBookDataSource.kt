@@ -4,7 +4,7 @@ import greazleay.booklibraryapi.datasource.BookDataSource
 import greazleay.booklibraryapi.model.Book
 import org.springframework.stereotype.Repository
 
-@Repository
+@Repository("mock db")
 class MockBookDataSource : BookDataSource {
 
     val books = mutableListOf<Book>(
@@ -27,6 +27,23 @@ class MockBookDataSource : BookDataSource {
         }
         books.add(book)
         return book
+    }
+
+    override fun updateBook(book: Book): Book {
+        val foundBook = books.firstOrNull() { it.id == book.id }
+            ?: throw NoSuchElementException("Could not find a book with id $book.id")
+
+        books.remove(foundBook)
+        books.add(book)
+
+        return book
+    }
+
+    override fun deleteBook(bookId: String): Unit {
+        val foundBook = books.firstOrNull() { it.id == bookId }
+            ?: throw NoSuchElementException("Could not find a book with id $bookId")
+
+        books.remove(foundBook)
     }
 
 }
