@@ -1,0 +1,48 @@
+package greazleay.booklibraryapi.datasource.database
+
+import greazleay.booklibraryapi.datasource.BookDataSource
+import greazleay.booklibraryapi.model.Book
+import greazleay.booklibraryapi.repository.BookRepository
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.*
+import org.springframework.stereotype.Repository
+import java.util.*
+
+@Repository("database")
+class DataBaseDataSource : BookDataSource  {
+
+    @Autowired lateinit var bookRepository: BookRepository
+    override fun getBooks(): MutableIterable<Book> = bookRepository.findAll()
+
+    override fun getBook(bookId: String): Book =
+        bookRepository.findByIdOrNull(bookId)
+            ?: throw NoSuchElementException("Could not find a book with id $bookId")
+
+    override fun addNewBook(book: Book): Book {
+        if (bookRepository.findByTitle(book.title) != null) {
+            throw throw IllegalArgumentException("Book with title: ${book.title} already exists.")
+        }
+        bookRepository.save(book)
+        return book
+    }
+
+    override fun updateBook(book: Book): Book {
+        val bookToUpdate = bookRepository.findByIdOrNull(book.id)
+            ?: throw NoSuchElementException("Could not find a book with id ${book.id}")
+
+        bookToUpdate.title = book.title
+        bookToUpdate.author = book.author
+        bookToUpdate.firstPublish = book.firstPublish
+        bookToUpdate.pageCount = book.pageCount
+        bookToUpdate.isRead = book.isRead
+
+        bookRepository.save(bookToUpdate)
+        return bookToUpdate
+    }
+
+    override fun deleteBook(bookId: String) {
+        val bookToRemove = bookRepository.findByIdOrNull(bookId)
+            ?: throw NoSuchElementException("Could not find a book with id $bookId")
+        bookRepository.deleteById(bookToRemove.id!!)
+    }
+}

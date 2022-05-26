@@ -28,7 +28,7 @@ class BookController(private val bookService: BookService) {
         ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
 
     @GetMapping("all")
-    fun getBooks(): Collection<Book> = bookService.getBooks()
+    fun getBooks(): MutableIterable<Book> = bookService.getBooks()
 
     @GetMapping("/{bookId}")
     fun getBook(@PathVariable bookId: String): Book = bookService.getBook(bookId)

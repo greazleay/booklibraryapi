@@ -1,24 +1,26 @@
 package greazleay.booklibraryapi.model
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import org.hibernate.annotations.GenericGenerator
+import java.util.Date
+import javax.persistence.*
 
+@Entity(name = "book")
 data class Book(
 
-    @JsonProperty("id")
-    val id: String,
+    var title: String,
+    var author: String,
 
-    @JsonProperty("title")
-    val title: String,
+    @Column(name = "page_count")
+    var pageCount: Int,
+    var firstPublish: Int,
+    var isRead: Boolean
+) {
 
-    @JsonProperty("author")
-    val author: String,
+    @Id
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "uuid2")
+    val id: String? = null
 
-    @JsonProperty("numOfPages")
-    val numOfPages: Int,
+    val createdAt: Date = Date()
 
-    @JsonProperty("firstPublish")
-    val firstPublish: Int,
-
-    @JsonProperty("isRead")
-    val isRead: Boolean
-)
+}

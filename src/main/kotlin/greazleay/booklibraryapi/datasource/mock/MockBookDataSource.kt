@@ -8,14 +8,14 @@ import org.springframework.stereotype.Repository
 class MockBookDataSource : BookDataSource {
 
     val books = mutableListOf<Book>(
-        Book("1", "Adventures of Huckleberry Finn", "Mark Twain", 500, 1984, true),
-        Book("2", "The Sun Also Rises", "Ernest Hemingway", 1000, 1928, true),
-        Book("3", "The Grapes of Wrath", "ohn Steinbeck", 700, 1939, false),
-        Book("4", "Mrs Dalloway", "Virginia Woolf", 800, 1925, true),
-        Book("5", "The Great Gatsby", "F. Scott Fitzgerald", 1300, 1925, false)
+        Book( "Adventures of Huckleberry Finn", "Mark Twain", 500, 1984, true),
+        Book( "The Sun Also Rises", "Ernest Hemingway", 1000, 1928, true),
+        Book( "The Grapes of Wrath", "ohn Steinbeck", 700, 1939, false),
+        Book( "Mrs Dalloway", "Virginia Woolf", 800, 1925, true),
+        Book( "The Great Gatsby", "F. Scott Fitzgerald", 1300, 1925, false)
     )
 
-    override fun getBooks(): Collection<Book> = books
+    override fun getBooks(): MutableIterable<Book> = books
 
     override fun getBook(bookId: String): Book =
         books.firstOrNull() { it.id == bookId }

@@ -89,7 +89,7 @@ internal class BookControllerTest @Autowired constructor(
         fun `it should add a new book` () {
 
             // given
-            val newBook = Book("6", "Invisible Man", "Ralph Ellison", 800, 1952, false)
+            val newBook = Book("Invisible Man", "Ralph Ellison", 800, 1952, false)
 
             // when
             val performPostRequest = mockMvc.post("$baseUrl/add") {
@@ -118,7 +118,7 @@ internal class BookControllerTest @Autowired constructor(
         fun `it should return a 400 BAD REQUEST if book with given ID already exists` () {
 
             // given
-            val invalidBook = Book("4", "Nineteen Eighty-Four", "George Orwell", 650, 1949, false)
+            val invalidBook = Book("Nineteen Eighty-Four", "George Orwell", 650, 1949, false)
 
             // when
             val performPostRequest = mockMvc.post("$baseUrl/add") {
@@ -145,7 +145,7 @@ internal class BookControllerTest @Autowired constructor(
         fun `it should update an existing book matching the bookID in the request body` () {
 
             // given
-            val updateBook = Book("6", "Invisible Man", "Ralph Ellison", 800, 1952, false)
+            val updateBook = Book( "Invisible Man", "Ralph Ellison", 800, 1952, false)
 
             // when
             val performPatchRequest = mockMvc.patch("$baseUrl/update") {
@@ -174,7 +174,7 @@ internal class BookControllerTest @Autowired constructor(
         fun `should return 404 NOT FOUND if a book with the specified id in the request body doesn't exist` () {
 
             // given
-            val invalidBook = Book("7", "Invisible Man", "Ralph Ellison", 800, 1952, false)
+            val invalidBook = Book("Invisible Man", "Ralph Ellison", 800, 1952, false)
 
             // when & then
             // when
