@@ -1,7 +1,6 @@
 package greazleay.booklibraryapi.datasource
 
 import greazleay.booklibraryapi.model.Book
-import java.util.*
 
 interface BookDataSource {
 

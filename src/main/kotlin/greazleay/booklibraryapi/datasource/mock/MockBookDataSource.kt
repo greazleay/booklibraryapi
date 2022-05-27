@@ -1,18 +1,29 @@
 package greazleay.booklibraryapi.datasource.mock
 
 import greazleay.booklibraryapi.datasource.BookDataSource
+import greazleay.booklibraryapi.model.Author
 import greazleay.booklibraryapi.model.Book
 import org.springframework.stereotype.Repository
+import java.util.*
+import kotlin.NoSuchElementException
 
 @Repository("mock db")
 class MockBookDataSource : BookDataSource {
 
+    val authors = mutableListOf<Author>(
+        Author(firstName = "Mark", lastName = "Twain"),
+        Author(firstName = "Ernest", lastName = "Hemingway"),
+        Author(firstName = "Ohn", lastName = "Steinbeck"),
+        Author(firstName = "Virginia", lastName = "Woolf"),
+        Author(firstName = "F. Scott", lastName = "Fitzgerald")
+    )
+
     val books = mutableListOf<Book>(
-        Book( "Adventures of Huckleberry Finn", "Mark Twain", 500, 1984, true),
-        Book( "The Sun Also Rises", "Ernest Hemingway", 1000, 1928, true),
-        Book( "The Grapes of Wrath", "ohn Steinbeck", 700, 1939, false),
-        Book( "Mrs Dalloway", "Virginia Woolf", 800, 1925, true),
-        Book( "The Great Gatsby", "F. Scott Fitzgerald", 1300, 1925, false)
+        Book( title="Adventures of Huckleberry Finn", author=authors[0], publicationDate = Date(1924), pageCount = 500, isRead=true),
+        Book( title = "The Sun Also Rises", author = authors[1], publicationDate = Date(1928), pageCount = 1000),
+        Book( title = "The Grapes of Wrath", author = authors[2], publicationDate = Date(1939), pageCount = 700),
+        Book( title="Mrs Dalloway", author = authors[3], publicationDate =  Date(1925), pageCount = 800, isRead =  true),
+        Book( title="The Great Gatsby", author=authors[4], publicationDate = Date(1925), pageCount = 1300)
     )
 
     override fun getBooks(): MutableIterable<Book> = books

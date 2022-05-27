@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository("database")
-class DataBaseDataSource : BookDataSource  {
+class BookDBDataSource : BookDataSource  {
 
     @Autowired lateinit var bookRepository: BookRepository
     override fun getBooks(): MutableIterable<Book> = bookRepository.findAll()
@@ -32,7 +32,7 @@ class DataBaseDataSource : BookDataSource  {
 
         bookToUpdate.title = book.title
         bookToUpdate.author = book.author
-        bookToUpdate.firstPublish = book.firstPublish
+        bookToUpdate.publicationDate = book.publicationDate
         bookToUpdate.pageCount = book.pageCount
         bookToUpdate.isRead = book.isRead
 
