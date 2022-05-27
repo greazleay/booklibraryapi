@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 
 @Service
-class GenreService (@Qualifier("database") private val dataSource: GenreDataSource) {
+class GenreService (@Qualifier("genre-db") private val dataSource: GenreDataSource) {
 
     fun getGenres(): MutableIterable<Genre> = dataSource.getGenres()
     fun getGenre(genreId: String): Genre = dataSource.getGenre(genreId)

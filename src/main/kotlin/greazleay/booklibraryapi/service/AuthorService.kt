@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 
 @Service
-class AuthorService (@Qualifier("database") private val dataSource: AuthorDataSource) {
+class AuthorService (@Qualifier("author-db") private val dataSource: AuthorDataSource) {
 
     fun getAuthors(): MutableIterable<Author> = dataSource.getAuthors()
     fun getAuthor(authorId: String): Author = dataSource.getAuthor(authorId)

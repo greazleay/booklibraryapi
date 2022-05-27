@@ -1,17 +1,19 @@
 package greazleay.booklibraryapi.model
 
+import com.fasterxml.jackson.annotation.*
 import org.hibernate.annotations.GenericGenerator
 import java.util.Date
 import javax.persistence.*
 
 @Entity(name = "book")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
 class Book(
 
     @Column(name = "title")
     var title: String,
 
-    @Column(name = "author")
-    @ManyToOne
+//    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     var author: Author? = null,
 
     @Column(name = "description")
@@ -38,8 +40,7 @@ class Book(
     @Column(name = "cover_url")
     var coverUrl: String? = null,
 
-    @Column(name = "genres")
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "books")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST])
     @JoinTable(
         name = "book_genre",
         joinColumns = [JoinColumn(name = "book_id", referencedColumnName = "id")],

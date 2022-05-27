@@ -13,8 +13,7 @@ class Genre (
     @Column(name = "description", nullable = false)
     var description: String,
 
-    @Column(name = "books")
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "genres")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "genres", cascade = [CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST])
     var books: MutableSet<Book>
 ) {
 

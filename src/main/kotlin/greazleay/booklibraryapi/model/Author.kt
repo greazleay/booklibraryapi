@@ -1,10 +1,12 @@
 package greazleay.booklibraryapi.model
 
+import com.fasterxml.jackson.annotation.*
 import org.hibernate.annotations.GenericGenerator
 import java.util.*
 import javax.persistence.*
 
 @Entity(name = "author")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
 class Author (
 
     @Column(name = "first_name")
@@ -22,8 +24,8 @@ class Author (
     @Column(name = "death_date")
     var deathDate: Date? = null,
 
-    @Column(name = "books")
-    @OneToMany(mappedBy = "author", cascade = [CascadeType.ALL])
+//    @JsonManagedReference
+    @OneToMany(mappedBy = "author", cascade = [CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST])
     var books: MutableSet<Book>? = null,
 
     @Column(name = "image_url")

@@ -3,33 +3,41 @@ package greazleay.booklibraryapi.datasource.database
 import greazleay.booklibraryapi.datasource.AuthorDataSource
 import greazleay.booklibraryapi.model.Author
 import greazleay.booklibraryapi.repository.AuthorRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.*
 import org.springframework.stereotype.Repository
 import java.util.*
 
-@Repository("database")
-class AuthorDBDataSource : AuthorDataSource {
+@Repository("author-db")
+class AuthorDBDataSource (private val authorRepository: AuthorRepository) : AuthorDataSource {
 
-    @Autowired lateinit var authorRepository: AuthorRepository
+    override fun getAuthors(): MutableIterable<Author> = authorRepository.findAll()
 
-    override fun getAuthors(): MutableIterable<Author> {
-        TODO("Not yet implemented")
-    }
-
-    override fun getAuthor(authorId: String): Author {
-        TODO("Not yet implemented")
-    }
+    override fun getAuthor(authorId: String): Author = authorRepository.findByIdOrNull(id = authorId) 
+        ?: throw NoSuchElementException("Could not find author with id: $authorId")
 
     override fun addNewAuthor(author: Author): Author {
-        TODO("Not yet implemented")
+        if (authorRepository.findByFirstNameAndLastName(author.firstName, author.lastName).isNotEmpty()) {
+            throw IllegalArgumentException("Author with name ${author.firstName} ${author.lastName} already exists")
+        }
+        return authorRepository.save(author)
     }
 
     override fun updateAuthor(author: Author): Author {
-        TODO("Not yet implemented")
+        val authorToUpdate = authorRepository.findByIdOrNull(id = author.id)
+            ?: throw NoSuchElementException("Could not find author with id: ${author.id}")
+
+        authorToUpdate.firstName = author.firstName
+        authorToUpdate.lastName = author.lastName
+        authorToUpdate.birthDate = author.birthDate
+        authorToUpdate.deathDate = author.deathDate
+
+        return authorRepository.save(authorToUpdate)
     }
 
     override fun deleteAuthor(authorId: String) {
-        TODO("Not yet implemented")
+        val authorToRemove = authorRepository.findByIdOrNull(id = authorId)
+            ?: throw NoSuchElementException("Could not find author with id: $authorId")
+
+        authorRepository.delete(authorToRemove)
     }
 }

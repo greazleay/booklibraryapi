@@ -1,9 +1,7 @@
 package greazleay.booklibraryapi.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jsonMapper
 import greazleay.booklibraryapi.model.Book
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -15,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.web.servlet.*
+import java.util.*
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -89,7 +88,7 @@ internal class BookControllerTest @Autowired constructor(
         fun `it should add a new book` () {
 
             // given
-            val newBook = Book("Invisible Man", "Ralph Ellison", 800, 1952, false)
+            val newBook = Book(title = "Invisible Man", publicationDate = Date(1928), pageCount = 1000)
 
             // when
             val performPostRequest = mockMvc.post("$baseUrl/add") {
@@ -118,7 +117,7 @@ internal class BookControllerTest @Autowired constructor(
         fun `it should return a 400 BAD REQUEST if book with given ID already exists` () {
 
             // given
-            val invalidBook = Book("Nineteen Eighty-Four", "George Orwell", 650, 1949, false)
+            val invalidBook = Book("Nineteen Eighty-Four", publicationDate = Date(1928), pageCount = 1000)
 
             // when
             val performPostRequest = mockMvc.post("$baseUrl/add") {
@@ -145,7 +144,7 @@ internal class BookControllerTest @Autowired constructor(
         fun `it should update an existing book matching the bookID in the request body` () {
 
             // given
-            val updateBook = Book( "Invisible Man", "Ralph Ellison", 800, 1952, false)
+            val updateBook = Book( "Invisible Man", publicationDate = Date(1928), pageCount = 1000)
 
             // when
             val performPatchRequest = mockMvc.patch("$baseUrl/update") {
@@ -174,7 +173,7 @@ internal class BookControllerTest @Autowired constructor(
         fun `should return 404 NOT FOUND if a book with the specified id in the request body doesn't exist` () {
 
             // given
-            val invalidBook = Book("Invisible Man", "Ralph Ellison", 800, 1952, false)
+            val invalidBook = Book("Invisible Man", publicationDate = Date(1928), pageCount = 1000)
 
             // when & then
             // when

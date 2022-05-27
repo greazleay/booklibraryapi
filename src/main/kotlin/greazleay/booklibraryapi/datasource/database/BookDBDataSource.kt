@@ -2,16 +2,18 @@ package greazleay.booklibraryapi.datasource.database
 
 import greazleay.booklibraryapi.datasource.BookDataSource
 import greazleay.booklibraryapi.model.Book
+import greazleay.booklibraryapi.repository.AuthorRepository
 import greazleay.booklibraryapi.repository.BookRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.*
 import org.springframework.stereotype.Repository
 import java.util.*
 
-@Repository("database")
-class BookDBDataSource : BookDataSource  {
+@Repository("book-db")
+class BookDBDataSource (
+    private val authorRepository: AuthorRepository,
+    private val bookRepository: BookRepository
+    ) : BookDataSource  {
 
-    @Autowired lateinit var bookRepository: BookRepository
     override fun getBooks(): MutableIterable<Book> = bookRepository.findAll()
 
     override fun getBook(bookId: String): Book =
@@ -30,13 +32,13 @@ class BookDBDataSource : BookDataSource  {
         val bookToUpdate = bookRepository.findByIdOrNull(book.id)
             ?: throw NoSuchElementException("Could not find a book with id ${book.id}")
 
-        bookToUpdate.title = book.title
-        bookToUpdate.author = book.author
-        bookToUpdate.publicationDate = book.publicationDate
-        bookToUpdate.pageCount = book.pageCount
-        bookToUpdate.isRead = book.isRead
+//        bookToUpdate.title = book.title
+//        bookToUpdate.author = book.author
+//        bookToUpdate.publicationDate = book.publicationDate
+//        bookToUpdate.pageCount = book.pageCount
+//        bookToUpdate.isRead = book.isRead
 
-        bookRepository.save(bookToUpdate)
+        bookRepository.save(book)
         return bookToUpdate
     }
 

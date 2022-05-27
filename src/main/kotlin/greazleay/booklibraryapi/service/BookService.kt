@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 
 @Service
-class BookService(@Qualifier("database") private val dataSource: BookDataSource) {
+class BookService(@Qualifier("book-db") private val dataSource: BookDataSource) {
 
     fun getBooks(): MutableIterable<Book> = dataSource.getBooks()
     fun getBook(bookId: String): Book = dataSource.getBook(bookId)
