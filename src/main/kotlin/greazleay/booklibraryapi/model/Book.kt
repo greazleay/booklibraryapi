@@ -46,7 +46,7 @@ class Book(
         joinColumns = [JoinColumn(name = "book_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "genre_id")]
     )
-    var genres: MutableSet<Genre> = mutableSetOf(),
+    var genres: MutableSet<Genre>? = mutableSetOf(),
 
     @Column(name = "is_read")
     var isRead: Boolean = false

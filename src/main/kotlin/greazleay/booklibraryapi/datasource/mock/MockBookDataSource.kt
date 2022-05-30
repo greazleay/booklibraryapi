@@ -1,6 +1,8 @@
 package greazleay.booklibraryapi.datasource.mock
 
 import greazleay.booklibraryapi.datasource.BookDataSource
+import greazleay.booklibraryapi.dto.AuthorToBookDto
+import greazleay.booklibraryapi.dto.GenreToBookDto
 import greazleay.booklibraryapi.model.Author
 import greazleay.booklibraryapi.model.Book
 import org.springframework.stereotype.Repository
@@ -48,6 +50,22 @@ class MockBookDataSource : BookDataSource {
         books.add(book)
 
         return book
+    }
+
+    override fun addAuthorToBook(authorToBook: AuthorToBookDto): Book {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeAuthorFromBook(authorToBook: AuthorToBookDto): Book {
+        TODO("Not yet implemented")
+    }
+
+    override fun addGenreToBook(genreToBookDto: GenreToBookDto): Book {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeGenreFromBook(genreToBookDto: GenreToBookDto): Book {
+        TODO("Not yet implemented")
     }
 
     override fun deleteBook(bookId: String): Unit {

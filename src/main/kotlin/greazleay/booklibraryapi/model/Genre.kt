@@ -14,7 +14,7 @@ class Genre (
     var description: String,
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "genres", cascade = [CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST])
-    var books: MutableSet<Book>
+    var books: MutableSet<Book>?
 ) {
 
     @Id
